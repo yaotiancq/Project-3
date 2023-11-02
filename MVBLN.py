@@ -1,3 +1,6 @@
+import time
+import random
+import matplotlib.pyplot as plt
 import numpy as np
 
 def LoveThyNeighbor(L):
@@ -57,9 +60,7 @@ def MVBLN(L, k):
 
     return b, mvbln_value
 
-
-if __name__ == '__main__':
-
+def correctness_test():    
     L1 = [100, 300, 400, 500, 400]
     k1 = 2
     L2 = [10, 100, 300, 400, 50, 4500, 200, 30, 90]
@@ -68,7 +69,7 @@ if __name__ == '__main__':
     k3 = 1
     L4 = np.random.randint(10,30,10)
     k4 = 3
-    
+
     b1, mvbln1 = MVBLN(L1, k1)
     print(b1)  #  [1, 0, 1, 1, 1]
     print(mvbln1)  #  1400
@@ -80,11 +81,52 @@ if __name__ == '__main__':
     b3, mvbln3 = MVBLN(L3, k3)
     print(b3)  #  [0, 1, 1, 0]
     print(mvbln3)  #  700
-    
+
     b4, mvbln4 = MVBLN(L4, k4)
     print(b4)  
     print(L4)  
     print(mvbln4)  
+
+def performance_test(L,N,n,k):
+    start = time.time()
+    b, mvbln = MVBLN(L, k)
+    end = time.time()
+    return end-start
+
+def plot_2d_graph(n, z1, z2):
+    plt.plot(n, z1, 'r', label='Experimental Result')
+    plt.plot(n, z2, 'b', label='Thoeretical Result')
+    plt.xlabel('nk')
+    plt.ylabel('Running Time')
+    plt.legend()
+    plt.show()
+
+def run_and_plot():
+    N = 10000
+    n = [i for i in range(1000, 10000, 500)]
+    k = [100]
+    z=[]
+       
+    for i in n:
+        for j in k:
+            temp=[]
+            for _ in range(10):
+                L = [ele for ele in random.sample(range(N), i)]
+                temp.append(performance_test(L, N, i, j))
+            z.append(sum(temp)/10)
+    print(n)
+    #print(z)
+    for i in z:
+        print(i)
+    ratio = 0.00000063
+    plot_2d_graph([j*100 for j in n],z,[i*100*ratio for i in n])
+
+
+if __name__ == '__main__':
+    correctness_test()
+    run_and_plot()
+    
+
 
 
     
