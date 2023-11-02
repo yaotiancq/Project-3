@@ -3,12 +3,12 @@ from matplotlib import pyplot
 
 
 def LoveThyNeighbor(L):
-    global COUNTER
+    # global COUNTER
     dp = [0] * (len(L)+1)
     dp[1] = L[0]
     dp[2] = max(L[0], L[1])
     for i in range(3, len(L)+1):
-        COUNTER += 1
+        # COUNTER += 1
         dp[i] = max(dp[i-1], dp[i-2] + L[i-1])
     return dp
 
@@ -95,24 +95,27 @@ if __name__ == '__main__':
     # print(L4)
     # print(mvbln4)
 
-    N, K = 100, 10
+    plot = pyplot.axes(projection='3d')
+    N, K = 500, 500
+
     bound_x, bound_y = np.meshgrid(
         [_ for _ in range(0, N+1)], [_ for _ in range(0, K+1)])
-
     bound_z = bound_x*bound_y
 
-    plot = pyplot.axes(projection='3d')
-    plot.plot_surface(bound_x, bound_y, bound_z)
+    # Theoretical
+    plot.plot_surface(bound_x, bound_y, bound_z,
+                      color='red')
 
     stats_z = np.zeros(shape=(K+1, N+1), dtype=int)
-    for k in range(0, K+1):
+    for k in range(1, K+1):
         for n in range(2, N+1):
             global COUNTER
             COUNTER = 0
             L = np.random.randint(10, 300, n)
             _bin, _res = MVBLN(L, k)
             stats_z[k][n] = COUNTER
-    plot.scatter(bound_x, bound_y, stats_z)
+    # Experimental
+    plot.plot_surface(bound_x, bound_y, stats_z)
     pyplot.show()
 
     # print(bound_x)
