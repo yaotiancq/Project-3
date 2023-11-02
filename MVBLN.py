@@ -1,3 +1,5 @@
+import numpy as np
+
 def LoveThyNeighbor(L):
     dp = [0] * (len(L)+1)
     dp[1] = L[0]
@@ -55,6 +57,7 @@ def MVBLN(L, k):
 
     return b, mvbln_value
 
+
 if __name__ == '__main__':
 
     L1 = [100, 300, 400, 500, 400]
@@ -63,7 +66,9 @@ if __name__ == '__main__':
     k2 = 2
     L3 = [100, 300, 400, 50]
     k3 = 1
-
+    L4 = np.random.randint(10,30,10)
+    k4 = 3
+    
     b1, mvbln1 = MVBLN(L1, k1)
     print(b1)  #  [1, 0, 1, 1, 1]
     print(mvbln1)  #  1400
@@ -75,3 +80,13 @@ if __name__ == '__main__':
     b3, mvbln3 = MVBLN(L3, k3)
     print(b3)  #  [0, 1, 1, 0]
     print(mvbln3)  #  700
+    
+    b4, mvbln4 = MVBLN(L4, k4)
+    print(b4)  
+    print(L4)  
+    print(mvbln4)  
+
+
+    
+        
+
